@@ -12,7 +12,6 @@ import { supabase } from "@/integrations/supabase/client";
 import { TextEffect } from "@/components/ui/text-effect";
 import { useToast } from "@/components/ui/use-toast";
 import Floating, { FloatingElement } from "@/components/ui/parallax-floating";
-import { Confetti } from "@/components/ui/confetti";
 
 interface Message {
   id: number;
@@ -156,7 +155,6 @@ const Index = () => {
   };
   return (
     <BackgroundBeamsWithCollision className="min-h-screen bg-gradient-to-br from-rose-50 to-indigo-50 py-12 px-4 flex flex-col">
-      <Confetti className="fixed inset-0 pointer-events-none" />
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
