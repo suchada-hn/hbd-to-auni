@@ -203,7 +203,6 @@ const Index = () => {
             deleteSpeed={40}
             cursorChar="_"
           />
-          <span>below</span>
         </div>
         {/* <p className="text-rose-500 font-medium mt-2">{messages.length} messages received</p> */}
       </motion.div>
@@ -226,7 +225,7 @@ const Index = () => {
       </AnimatePresence>
       <motion.button
         onClick={() => setShowForm(true)}
-        className="fixed bottom-8 right-8 bg-rose-500 text-white px-6 py-3 rounded-full flex items-center gap-2 shadow-lg hover:bg-rose-600 transition-colors z-50"
+        className="fixed bottom-8 bg-rose-500 text-white px-6 py-3 rounded-full flex items-center gap-2 shadow-lg hover:bg-rose-600 transition-colors z-50"
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
       >
