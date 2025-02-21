@@ -12,6 +12,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { TextEffect } from "@/components/ui/text-effect";
 import { useToast } from "@/components/ui/use-toast";
 import Floating, { FloatingElement } from "@/components/ui/parallax-floating";
+import { Confetti } from "@/components/ui/confetti";
 
 interface Message {
   id: number;
@@ -38,158 +39,7 @@ const getRandomPosition = () => ({
 
 const Index = () => {
   const [showForm, setShowForm] = useState(false);
-  // const [messages, setMessages] = useState<Message[]>([
-  //   {
-  //     id: 1,
-  //     author: "Sarah",
-  //     message:
-  //       "Happy birthday Auni! 🎉 Wishing you the most amazing day filled with joy and laughter!",
-  //     color: "bg-postit-peach",
-  //     createdAt: "Just now",
-  //     emoji: "✨",
-  //     decoration: "sparkles",
-  //   },
-  //   {
-  //     id: 1,
-  //     author: "Sarah",
-  //     message:
-  //       "Happy birthday Auni! 🎉 Wishing you the most amazing day filled with joy and laughter!",
-  //     color: "bg-postit-peach",
-  //     createdAt: "Just now",
-  //     emoji: "✨",
-  //     decoration: "sparkles",
-  //   },
-  //   {
-  //     id: 1,
-  //     author: "Sarah",
-  //     message:
-  //       "Happy birthday Auni! 🎉 Wishing you the most amazing day filled with joy and laughter!",
-  //     color: "bg-postit-peach",
-  //     createdAt: "Just now",
-  //     emoji: "✨",
-  //     decoration: "sparkles",
-  //   },
-  //   {
-  //     id: 1,
-  //     author: "Sarah",
-  //     message:
-  //       "Happy birthday Auni! 🎉 Wishing you the most amazing day filled with joy and laughter!",
-  //     color: "bg-postit-peach",
-  //     createdAt: "Just now",
-  //     emoji: "✨",
-  //     decoration: "sparkles",
-  //   },
-  //   {
-  //     id: 1,
-  //     author: "Sarah",
-  //     message:
-  //       "Happy birthday Auni! 🎉 Wishing you the most amazing day filled with joy and laughter!",
-  //     color: "bg-postit-peach",
-  //     createdAt: "Just now",
-  //     emoji: "✨",
-  //     decoration: "sparkles",
-  //   },
-  //   {
-  //     id: 1,
-  //     author: "Sarah",
-  //     message:
-  //       "Happy birthday Auni! 🎉 Wishing you the most amazing day filled with joy and laughter!",
-  //     color: "bg-postit-peach",
-  //     createdAt: "Just now",
-  //     emoji: "✨",
-  //     decoration: "sparkles",
-  //   },
-  //   {
-  //     id: 1,
-  //     author: "Sarah",
-  //     message:
-  //       "Happy birthday Auni! 🎉 Wishing you the most amazing day filled with joy and laughter!",
-  //     color: "bg-postit-peach",
-  //     createdAt: "Just now",
-  //     emoji: "✨",
-  //     decoration: "sparkles",
-  //   },
-  //   {
-  //     id: 1,
-  //     author: "Sarah",
-  //     message:
-  //       "Happy birthday Auni! 🎉 Wishing you the most amazing day filled with joy and laughter!",
-  //     color: "bg-postit-peach",
-  //     createdAt: "Just now",
-  //     emoji: "✨",
-  //     decoration: "sparkles",
-  //   },
-  //   {
-  //     id: 1,
-  //     author: "Sarah",
-  //     message:
-  //       "Happy birthday Auni! 🎉 Wishing you the most amazing day filled with joy and laughter!",
-  //     color: "bg-postit-peach",
-  //     createdAt: "Just now",
-  //     emoji: "✨",
-  //     decoration: "sparkles",
-  //   },
-  //   {
-  //     id: 1,
-  //     author: "Sarah",
-  //     message:
-  //       "Happy birthday Auni! 🎉 Wishing you the most amazing day filled with joy and laughter!",
-  //     color: "bg-postit-peach",
-  //     createdAt: "Just now",
-  //     emoji: "✨",
-  //     decoration: "sparkles",
-  //   },
-  //   {
-  //     id: 1,
-  //     author: "Sarah",
-  //     message:
-  //       "Happy birthday Auni! 🎉 Wishing you the most amazing day filled with joy and laughter!",
-  //     color: "bg-postit-peach",
-  //     createdAt: "Just now",
-  //     emoji: "✨",
-  //     decoration: "sparkles",
-  //   },
-  //   {
-  //     id: 1,
-  //     author: "Sarah",
-  //     message:
-  //       "Happy birthday Auni! 🎉 Wishing you the most amazing day filled with joy and laughter!",
-  //     color: "bg-postit-peach",
-  //     createdAt: "Just now",
-  //     emoji: "✨",
-  //     decoration: "sparkles",
-  //   },
-  // ]);
-
-  // const handleNewMessage = ({
-  //   author,
-  //   message,
-  //   emoji,
-  //   decoration,
-  // }: {
-  //   author: string;
-  //   message: string;
-  //   emoji: string;
-  //   decoration: string;
-  // }) => {
-  //   const newMessage = {
-  //     id: Date.now(),
-  //     author,
-  //     message,
-  //     color: COLORS[Math.floor(Math.random() * COLORS.length)],
-  //     createdAt: "Just now",
-  //     emoji,
-  //     decoration,
-  //   };
-  //   setMessages([newMessage, ...messages]);
-  // };
-
-  // const handleDeleteMessage = (id: number) => {
-  //   setMessages(messages.filter((message) => message.id !== id));
-  // };
-
   const [messages, setMessages] = useState<Message[]>([]);
-  console.log("🚀 ~ Index ~ messages:", messages);
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
   // Fetch messages on component mount
@@ -271,6 +121,7 @@ const Index = () => {
       });
 
       setShowForm(false);
+      fetchMessages();
     } catch (error) {
       console.error("Error adding message:", error);
       toast({
@@ -305,6 +156,7 @@ const Index = () => {
   };
   return (
     <BackgroundBeamsWithCollision className="min-h-screen bg-gradient-to-br from-rose-50 to-indigo-50 py-12 px-4 flex flex-col">
+      <Confetti className="fixed inset-0 pointer-events-none" />
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -413,32 +265,36 @@ const Index = () => {
       )} */}
       {/* <div className="max-w-7xl mx-auto overflow-auto"> */}
       {/* <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4"> */}
-      <Floating sensitivity={0.5} className="overflow-hidden">
-        {messages.map((message, index) => {
-          const position = getRandomPosition();
-          return (
-            <FloatingElement
-              key={message.id}
-              depth={Math.random() * 2 + 0.5}
-              className={`z-10`}
-              style={{ top: position.top, left: position.left }}
-            >
-              <motion.div
+      {loading ? (
+        <div className="text-center text-slate-600">Loading messages...</div>
+      ) : (
+        <Floating sensitivity={0.5} className="overflow-hidden">
+          {messages.map((message, index) => {
+            const position = getRandomPosition();
+            return (
+              <FloatingElement
                 key={message.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
-                className="animate-float"
+                depth={Math.random() * 2 + 0.5}
+                className={`z-10`}
+                style={{ top: position.top, left: position.left }}
               >
-                <PostIt
-                  {...message}
-                  onDelete={() => handleRemove(message.id.toString())}
-                />
-              </motion.div>
-            </FloatingElement>
-          );
-        })}
-      </Floating>
+                <motion.div
+                  key={message.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                  className="animate-float"
+                >
+                  <PostIt
+                    {...message}
+                    onDelete={() => handleRemove(message.id.toString())}
+                  />
+                </motion.div>
+              </FloatingElement>
+            );
+          })}
+        </Floating>
+      )}
       {/* </div> */}
       {/* </div> */}
     </BackgroundBeamsWithCollision>
